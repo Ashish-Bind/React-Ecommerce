@@ -2,8 +2,7 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import FormatPrice from '../helpers/FormatPrice'
 
-function Product(item) {
-  const { id, name, price, category, image } = item
+function Product({ id, name, price, category, image }) {
   return (
     <NavLink to={`/singleproduct/${id}`}>
       <div className="card">
