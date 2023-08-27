@@ -4,7 +4,8 @@ Ecommerce Website made using React. For State Management Context API is used wit
 
 ---
 
-![React-Ecommerce](React%20Ecommerce%20a86a0db1353840a68a69b4d87d0bf2c9/Untitled.png)
+![React-Ecommerce](https://github.com/Ashish-Bind/React-Ecommerce/assets/121487855/3a315e83-78b1-40d5-a15b-2380067cf067)
+
 
 ---
 
