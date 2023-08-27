@@ -11,6 +11,8 @@ const initialState = {
   sortByValue: 'lowest',
   filters: {
     searchText: '',
+    categoryText: 'all',
+    companyText: 'all',
   },
 }
 
@@ -32,11 +34,11 @@ export default function FilterProvider({ children }) {
     dispatch({ type: FILTER_ACTIONS.GET_SORT_VALUE, payload: e.target.value })
   }
 
-  const updateSearchFilter = (e) => {
+  const updateFilterValue = (e) => {
     const name = e.target.name
     const value = e.target.value
     dispatch({
-      type: FILTER_ACTIONS.SET_SEARCH_FILTER,
+      type: FILTER_ACTIONS.SET_FILTER_VALUE,
       payload: { name, value },
     })
   }
@@ -56,7 +58,7 @@ export default function FilterProvider({ children }) {
 
   return (
     <FilterContext.Provider
-      value={{ ...state, setGrid, setList, sorting, updateSearchFilter }}
+      value={{ ...state, setGrid, setList, sorting, updateFilterValue }}
     >
       {children}
     </FilterContext.Provider>

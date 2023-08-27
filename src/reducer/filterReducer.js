@@ -4,7 +4,7 @@ export const FILTER_ACTIONS = {
   SET_LIST: 'set-list',
   GET_SORT_VALUE: 'get-sort-value',
   SORTING_PRODUCTS: 'sorting-products',
-  SET_SEARCH_FILTER: 'set-search-filter',
+  SET_FILTER_VALUE: 'set-filter-value',
   FILTER_PRODUCTS: 'filter-products',
 }
 
@@ -54,7 +54,7 @@ export const reducer = (state, { type, payload }) => {
         filteredItems: getSortedItems(state, state.sortByValue),
       }
 
-    case FILTER_ACTIONS.SET_SEARCH_FILTER:
+    case FILTER_ACTIONS.SET_FILTER_VALUE:
       return {
         ...state,
         filters: {
@@ -66,11 +66,23 @@ export const reducer = (state, { type, payload }) => {
     case FILTER_ACTIONS.FILTER_PRODUCTS:
       const { allProducts } = state
       let tempFilteredProducts = [...allProducts]
-      const { searchText } = state.filters
+      const { searchText, categoryText, companyText } = state.filters
 
       if (searchText) {
         tempFilteredProducts = tempFilteredProducts.filter((product) => {
           return product.name.toLowerCase().includes(searchText.toLowerCase())
+        })
+      }
+
+      if (categoryText !== 'all') {
+        tempFilteredProducts = tempFilteredProducts.filter((product) => {
+          return product.category === categoryText
+        })
+      }
+
+      if (companyText !== 'all') {
+        tempFilteredProducts = tempFilteredProducts.filter((product) => {
+          return product.company === companyText
         })
       }
 

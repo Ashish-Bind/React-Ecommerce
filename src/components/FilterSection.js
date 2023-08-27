@@ -1,12 +1,25 @@
-import { useState } from 'react'
 import styled from 'styled-components'
 import { useFilter } from '../context/filterContext'
 
 function FilterSection() {
   const {
-    filters: { searchText },
-    updateSearchFilter,
+    filters: { searchText, categoryText },
+    updateFilterValue,
+    allProducts,
   } = useFilter()
+
+  const getUniqueData = (data, property) => {
+    let uniqueData = data.map((product) => product[property])
+    if (property === 'colors') {
+      uniqueData = uniqueData.flat()
+    }
+    return ['all', ...new Set(uniqueData)]
+  }
+
+  const uniqueCategory = getUniqueData(allProducts, 'category')
+  const uniqueCompany = getUniqueData(allProducts, 'company')
+  const uniqueColors = getUniqueData(allProducts, 'colors')
+  console.log(uniqueColors)
 
   return (
     <Wrapper>
@@ -16,11 +29,42 @@ function FilterSection() {
             type="text"
             name="searchText"
             value={searchText}
-            onChange={updateSearchFilter}
+            onChange={updateFilterValue}
             placeholder="Search Product..."
             autoComplete="off"
           />
         </form>
+      </div>
+
+      <div className="filter-category">
+        <h3>Category</h3>
+        <div>
+          {uniqueCategory.map((category, i) => (
+            <button
+              key={i}
+              type="button"
+              name="categoryText"
+              value={category}
+              onClick={updateFilterValue}
+              className={categoryText === category ? ' active' : ''}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="filter-company">
+        <h3>Company</h3>
+        <select
+          name="companyText"
+          className="filter-company--select"
+          onChange={updateFilterValue}
+        >
+          {uniqueCompany.map((company) => (
+            <option value={company}>{company}</option>
+          ))}
+        </select>
       </div>
     </Wrapper>
   )
@@ -47,6 +91,10 @@ const Wrapper = styled.section`
   }
 
   .filter-category {
+    h3 {
+      font-weight: 600;
+    }
+
     div {
       display: flex;
       flex-direction: column;
@@ -71,8 +119,14 @@ const Wrapper = styled.section`
     }
   }
 
+  .filter-company {
+    h3 {
+      font-weight: 600;
+    }
+  }
+
   .filter-company--select {
-    padding: 0.3rem 1.2rem;
+    padding: 0.6rem 2rem;
     font-size: 1.6rem;
     color: ${({ theme }) => theme.colors.text};
     text-transform: capitalize;
