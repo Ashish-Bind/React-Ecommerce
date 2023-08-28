@@ -1,9 +1,10 @@
 import styled from 'styled-components'
+import { FaCheck } from 'react-icons/fa'
 import { useFilter } from '../context/filterContext'
 
 function FilterSection() {
   const {
-    filters: { searchText, categoryText },
+    filters: { searchText, categoryText, colorText },
     updateFilterValue,
     allProducts,
   } = useFilter()
@@ -65,6 +66,39 @@ function FilterSection() {
             <option value={company}>{company}</option>
           ))}
         </select>
+      </div>
+
+      <div className="filter-colors colors">
+        <h3>Colors</h3>
+
+        <div className="filter-color-style">
+          {uniqueColors.map((color, i) => {
+            return color !== 'all' ? (
+              <button
+                key={i}
+                type="button"
+                name="colorText"
+                className={`btn-style ${color === colorText && 'active'} `}
+                style={{ backgroundColor: color }}
+                value={color}
+                onClick={updateFilterValue}
+              >
+                {color === colorText && <FaCheck className="icon" />}
+              </button>
+            ) : (
+              <button
+                key={i}
+                type="button"
+                name="colorText"
+                className="all-btn-color"
+                value={color}
+                onClick={updateFilterValue}
+              >
+                All
+              </button>
+            )
+          })}
+        </div>
       </div>
     </Wrapper>
   )
@@ -143,7 +177,14 @@ const Wrapper = styled.section`
     border: none;
     cursor: pointer;
   }
-  .btnStyle {
+
+  .filter-colors {
+    h3 {
+      font-weight: 600;
+    }
+  }
+
+  .btn-style {
     width: 2rem;
     height: 2rem;
     background-color: #000;
@@ -166,6 +207,11 @@ const Wrapper = styled.section`
   .checkStyle {
     font-size: 1rem;
     color: #fff;
+  }
+
+  .all-btn-color {
+    border: none;
+    font-weight: 600;
   }
 
   .filter_price {

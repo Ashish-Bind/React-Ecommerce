@@ -13,6 +13,7 @@ const initialState = {
     searchText: '',
     categoryText: 'all',
     companyText: 'all',
+    colorText: 'all',
   },
 }
 

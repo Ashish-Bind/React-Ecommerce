@@ -66,7 +66,7 @@ export const reducer = (state, { type, payload }) => {
     case FILTER_ACTIONS.FILTER_PRODUCTS:
       const { allProducts } = state
       let tempFilteredProducts = [...allProducts]
-      const { searchText, categoryText, companyText } = state.filters
+      const { searchText, categoryText, companyText, colorText } = state.filters
 
       if (searchText) {
         tempFilteredProducts = tempFilteredProducts.filter((product) => {
@@ -83,6 +83,12 @@ export const reducer = (state, { type, payload }) => {
       if (companyText !== 'all') {
         tempFilteredProducts = tempFilteredProducts.filter((product) => {
           return product.company === companyText
+        })
+      }
+
+      if (colorText !== 'all') {
+        tempFilteredProducts = tempFilteredProducts.filter((product) => {
+          return product.colors.includes(colorText)
         })
       }
 
