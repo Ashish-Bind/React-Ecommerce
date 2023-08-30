@@ -1,8 +1,30 @@
-import styled from "styled-components";
+import styled from 'styled-components'
+import { useCart } from '../context/cartContext'
+import CartItems from '../components/CartItems'
 
 const Cart = () => {
-  return <Wrapper></Wrapper>;
-};
+  const { cartItems } = useCart()
+  return (
+    <Wrapper>
+      <div className="container">
+        <div className="cart-heading grid grid-five-column">
+          <p>Item</p>
+          <p className="cart-hide">Price</p>
+          <p>Quantity</p>
+          <p className="cart-hide">SubTotal</p>
+          <p>Remove</p>
+        </div>
+        <hr />
+
+        <div className="cart-item">
+          {cartItems.map((item) => {
+            return <CartItems key={item.id} item={item} />
+          })}
+        </div>
+      </div>
+    </Wrapper>
+  )
+}
 
 const Wrapper = styled.section`
   padding: 9rem 0;
@@ -108,7 +130,7 @@ const Wrapper = styled.section`
     }
   }
 
-  .remove_icon {
+  .remove-icon {
     font-size: 1.6rem;
     color: #e74c3c;
     cursor: pointer;
@@ -177,6 +199,6 @@ const Wrapper = styled.section`
       }
     }
   }
-`;
+`
 
-export default Cart;
+export default Cart

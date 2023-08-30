@@ -4,9 +4,11 @@ import { FaCheck } from 'react-icons/fa'
 import CartAmountToggle from './CartAmountToggle'
 import { NavLink } from 'react-router-dom'
 import { Button } from '../styles/Button'
+import { useCart } from '../context/cartContext'
 
 function AddToCart({ product }) {
   const { id, colors, stock } = product
+  const { addToCart } = useCart()
   const [primaryColor, setPrimaryColor] = useState(0)
   const [amount, setAmount] = useState(1)
 
@@ -41,7 +43,12 @@ function AddToCart({ product }) {
             decreaseAmount={decreaseAmount}
             amount={amount}
           />
-          <NavLink to="/cart">
+          <NavLink
+            to="/cart"
+            onClick={() => {
+              addToCart(id, colors[primaryColor], amount, product)
+            }}
+          >
             <Button>Add to Cart</Button>
           </NavLink>
         </p>
