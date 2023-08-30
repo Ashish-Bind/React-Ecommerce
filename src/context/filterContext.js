@@ -9,11 +9,13 @@ const initialState = {
   allProducts: [],
   gridView: true,
   sortByValue: 'lowest',
+  max: 0,
   filters: {
     searchText: '',
     categoryText: 'all',
     companyText: 'all',
     colorText: 'all',
+    priceRangeText: 0,
   },
 }
 
@@ -44,6 +46,10 @@ export default function FilterProvider({ children }) {
     })
   }
 
+  const clearFilter = () => {
+    dispatch({ type: FILTER_ACTIONS.CLEAR_FILTERS })
+  }
+
   useEffect(() => {
     dispatch({ type: FILTER_ACTIONS.FILTER_PRODUCTS })
   }, [state.filters])
@@ -59,7 +65,14 @@ export default function FilterProvider({ children }) {
 
   return (
     <FilterContext.Provider
-      value={{ ...state, setGrid, setList, sorting, updateFilterValue }}
+      value={{
+        ...state,
+        setGrid,
+        setList,
+        sorting,
+        updateFilterValue,
+        clearFilter,
+      }}
     >
       {children}
     </FilterContext.Provider>

@@ -6,6 +6,7 @@ export const FILTER_ACTIONS = {
   SORTING_PRODUCTS: 'sorting-products',
   SET_FILTER_VALUE: 'set-filter-value',
   FILTER_PRODUCTS: 'filter-products',
+  CLEAR_FILTERS: 'clear-filters',
 }
 
 const getSortedItems = (state) => {
@@ -32,12 +33,20 @@ const getSortedItems = (state) => {
 
 export const reducer = (state, { type, payload }) => {
   switch (type) {
-    case FILTER_ACTIONS.LOAD_FILTER_ITEMS:
+    case FILTER_ACTIONS.LOAD_FILTER_ITEMS: {
+      const priceArray = payload.map((item) => item.price)
+      const maxValue = Math.max(...priceArray)
       return {
         ...state,
         filteredItems: [...payload],
         allProducts: [...payload],
+        max: maxValue,
+        filters: {
+          ...state.filters,
+          priceRangeText: maxValue,
+        },
       }
+    }
 
     case FILTER_ACTIONS.SET_GRID:
       return { ...state, gridView: true }
@@ -48,13 +57,14 @@ export const reducer = (state, { type, payload }) => {
     case FILTER_ACTIONS.GET_SORT_VALUE:
       return { ...state, sortByValue: payload }
 
-    case FILTER_ACTIONS.SORTING_PRODUCTS:
+    case FILTER_ACTIONS.SORTING_PRODUCTS: {
       return {
         ...state,
         filteredItems: getSortedItems(state, state.sortByValue),
       }
+    }
 
-    case FILTER_ACTIONS.SET_FILTER_VALUE:
+    case FILTER_ACTIONS.SET_FILTER_VALUE: {
       return {
         ...state,
         filters: {
@@ -62,11 +72,18 @@ export const reducer = (state, { type, payload }) => {
           [payload.name]: payload.value,
         },
       }
+    }
 
-    case FILTER_ACTIONS.FILTER_PRODUCTS:
+    case FILTER_ACTIONS.FILTER_PRODUCTS: {
       const { allProducts } = state
       let tempFilteredProducts = [...allProducts]
-      const { searchText, categoryText, companyText, colorText } = state.filters
+      const {
+        searchText,
+        categoryText,
+        companyText,
+        colorText,
+        priceRangeText,
+      } = state.filters
 
       if (searchText) {
         tempFilteredProducts = tempFilteredProducts.filter((product) => {
@@ -92,7 +109,29 @@ export const reducer = (state, { type, payload }) => {
         })
       }
 
+      if (priceRangeText) {
+        tempFilteredProducts = tempFilteredProducts.filter((product) => {
+          return product.price <= priceRangeText
+        })
+      }
+
       return { ...state, filteredItems: tempFilteredProducts }
+    }
+
+    case FILTER_ACTIONS.CLEAR_FILTERS: {
+      return {
+        ...state,
+        max: state.max,
+        filters: {
+          ...state.filters,
+          searchText: '',
+          categoryText: 'all',
+          companyText: 'all',
+          colorText: 'all',
+          priceRangeText: state.max,
+        },
+      }
+    }
 
     default:
       return state

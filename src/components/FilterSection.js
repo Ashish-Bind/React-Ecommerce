@@ -1,12 +1,16 @@
 import styled from 'styled-components'
 import { FaCheck } from 'react-icons/fa'
 import { useFilter } from '../context/filterContext'
+import FormatPrice from '../helpers/FormatPrice'
+import { Button } from '../styles/Button'
 
 function FilterSection() {
   const {
-    filters: { searchText, categoryText, colorText },
+    filters: { searchText, categoryText, colorText, priceRangeText },
     updateFilterValue,
     allProducts,
+    max,
+    clearFilter,
   } = useFilter()
 
   const getUniqueData = (data, property) => {
@@ -62,8 +66,10 @@ function FilterSection() {
           className="filter-company--select"
           onChange={updateFilterValue}
         >
-          {uniqueCompany.map((company) => (
-            <option value={company}>{company}</option>
+          {uniqueCompany.map((company, i) => (
+            <option key={i} value={company}>
+              {company}
+            </option>
           ))}
         </select>
       </div>
@@ -99,6 +105,25 @@ function FilterSection() {
             )
           })}
         </div>
+      </div>
+
+      <div className="filter-price">
+        <h3>Price</h3>
+        <p>
+          <FormatPrice price={priceRangeText} />
+        </p>
+        <input
+          type="range"
+          name="priceRangeText"
+          value={priceRangeText}
+          onChange={updateFilterValue}
+          min={0}
+          max={max}
+        />
+      </div>
+
+      <div className="filter-clear">
+        <Button onClick={clearFilter}>Clear Filters</Button>
       </div>
     </Wrapper>
   )
@@ -214,7 +239,7 @@ const Wrapper = styled.section`
     font-weight: 600;
   }
 
-  .filter_price {
+  .filter-price {
     input {
       margin: 0.5rem 0 1rem 0;
       padding: 0;
