@@ -5,14 +5,7 @@ import { useCart } from '../context/cartContext'
 
 function CartItems({ item }) {
   const { id, color, amount, name, img, price, max } = item
-  const { removeItem } = useCart()
-
-  function increaseAmount() {
-    //amount < stock ? setAmount((prev) => prev + 1) : setAmount(stock)
-  }
-  function decreaseAmount() {
-    //amount > 1 ? setAmount((prev) => prev - 1) : setAmount(1)
-  }
+  const { removeItem, increaseAmount, decreaseAmount } = useCart()
 
   return (
     <div className="cart-heading grid grid-five-column">
@@ -42,8 +35,8 @@ function CartItems({ item }) {
 
       <div>
         <CartAmountToggle
-          increaseAmount={increaseAmount}
-          decreaseAmount={decreaseAmount}
+          increaseAmount={() => increaseAmount(id)}
+          decreaseAmount={() => decreaseAmount(id)}
           amount={amount}
         />
       </div>

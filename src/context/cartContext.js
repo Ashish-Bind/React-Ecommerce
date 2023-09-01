@@ -31,12 +31,33 @@ function CartProvider({ children }) {
     dispatch({ type: CART_ACTIONS.REMOVE_ITEM, payload: itemId })
   }
 
+  const increaseAmount = (id) => {
+    dispatch({ type: CART_ACTIONS.INCREASE_AMOUNT, payload: id })
+  }
+
+  const decreaseAmount = (id) => {
+    dispatch({ type: CART_ACTIONS.DECREASE_AMOUNT, payload: id })
+  }
+
+  const clearCart = () => {
+    dispatch({ type: CART_ACTIONS.CLEAR_CART })
+  }
+
   useEffect(() => {
     localStorage.setItem('cart-item', JSON.stringify(state.cartItems))
   }, [state.cartItems])
 
   return (
-    <CartContext.Provider value={{ ...state, addToCart, removeItem }}>
+    <CartContext.Provider
+      value={{
+        ...state,
+        addToCart,
+        removeItem,
+        clearCart,
+        increaseAmount,
+        decreaseAmount,
+      }}
+    >
       {children}
     </CartContext.Provider>
   )

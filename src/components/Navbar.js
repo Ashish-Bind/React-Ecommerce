@@ -3,9 +3,11 @@ import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
 import { FiShoppingCart } from 'react-icons/fi'
 import { CgMenu, CgClose } from 'react-icons/cg'
+import { useCart } from '../context/cartContext'
 
 function Navbar() {
   const [menu, setMenu] = useState(false)
+  const { cartItems } = useCart()
 
   return (
     <Nav>
@@ -34,7 +36,7 @@ function Navbar() {
           <li>
             <NavLink to="/cart" className="navbar-link cart-trolley--link">
               <FiShoppingCart className="cart-trolley" />
-              <span className="cart-total--item">0</span>
+              <span className="cart-total--item">{cartItems.length}</span>
             </NavLink>
           </li>
         </ul>
@@ -106,6 +108,7 @@ const Nav = styled.nav`
       height: 2.4rem;
       position: absolute;
       background-color: #000;
+      font-size: 1.5rem;
       color: #fff;
       border-radius: 50%;
       display: grid;

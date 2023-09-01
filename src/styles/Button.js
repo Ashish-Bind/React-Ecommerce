@@ -7,7 +7,6 @@ export const Button = styled.button`
   color: rgb(255 255 255);
   padding: 1.4rem 2.4rem;
   border: none;
-  text-transform: uppercase;
   text-align: center;
   cursor: pointer;
   transition: all 0.3s ease;

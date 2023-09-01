@@ -1,10 +1,23 @@
 import styled from 'styled-components'
 import { useCart } from '../context/cartContext'
 import CartItems from '../components/CartItems'
+import { Button } from '../styles/Button'
+import { BsCart4 } from 'react-icons/bs'
+import { NavLink } from 'react-router-dom'
 
 const Cart = () => {
-  const { cartItems } = useCart()
-  return (
+  const { cartItems, clearCart } = useCart()
+  return cartItems.length === 0 ? (
+    <Wrapper>
+      <div className="container empty-cart">
+        <BsCart4 className="icon" />
+        <h1>Cart is Empty</h1>
+        <NavLink to="/products">
+          <Button>Continue Shopping</Button>
+        </NavLink>
+      </div>
+    </Wrapper>
+  ) : (
     <Wrapper>
       <div className="container">
         <div className="cart-heading grid grid-five-column">
@@ -21,6 +34,15 @@ const Cart = () => {
             return <CartItems key={item.id} item={item} />
           })}
         </div>
+
+        <hr />
+
+        <div className="cart-two-button">
+          <Button>Continue Shopping</Button>
+          <Button className="btn-clear" onClick={clearCart}>
+            Clear Cart
+          </Button>
+        </div>
       </div>
     </Wrapper>
   )
@@ -28,6 +50,17 @@ const Cart = () => {
 
 const Wrapper = styled.section`
   padding: 9rem 0;
+
+  .empty-cart {
+    text-align: center;
+    h1 {
+      font-weight: 600;
+      margin: 2rem 0;
+    }
+    .icon {
+      font-size: 20rem;
+    }
+  }
 
   .grid-four-column {
     grid-template-columns: repeat(4, 1fr);
@@ -40,7 +73,9 @@ const Wrapper = styled.section`
   }
   .cart-heading {
     text-align: center;
-    text-transform: uppercase;
+    .cart-heading > p {
+      font-weight: bold;
+    }
   }
   hr {
     margin-top: 1rem;

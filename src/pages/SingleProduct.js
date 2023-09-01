@@ -36,8 +36,8 @@ const SingleProduct = () => {
 
   return (
     <Wrapper>
-      <PageNavigation title={name} isLoading={isLoading} />
       <Container className="container">
+        <PageNavigation title={name} isLoading={isLoading} />
         <div className="grid grid-two-column">
           <div className="product_images">
             <ProductImage images={image} />
