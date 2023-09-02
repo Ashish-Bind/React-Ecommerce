@@ -7,7 +7,7 @@ import { useCart } from '../context/cartContext'
 
 function Navbar() {
   const [menu, setMenu] = useState(false)
-  const { cartItems } = useCart()
+  const { totalItems } = useCart()
 
   return (
     <Nav>
@@ -36,7 +36,7 @@ function Navbar() {
           <li>
             <NavLink to="/cart" className="navbar-link cart-trolley--link">
               <FiShoppingCart className="cart-trolley" />
-              <span className="cart-total--item">{cartItems.length}</span>
+              <span className="cart-total--item">{totalItems}</span>
             </NavLink>
           </li>
         </ul>

@@ -4,6 +4,7 @@ export const CART_ACTIONS = {
   CLEAR_CART: 'clear-cart',
   INCREASE_AMOUNT: 'increase-amount',
   DECREASE_AMOUNT: 'decrease-amount',
+  UPDATE_TOTAL_VALUES: 'update-total-values',
 }
 
 function removeCartItem(state, id) {
@@ -73,6 +74,20 @@ const reducer = (state, { type, payload }) => {
         return item
       })
       return { ...state, cartItems: [...state.cartItems] }
+    }
+
+    case CART_ACTIONS.UPDATE_TOTAL_VALUES: {
+      const { totalPrice, totalItems } = state.cartItems.reduce(
+        (acc, cur) => {
+          const { amount, price } = cur
+          acc.totalItems += cur.amount
+          acc.totalPrice += amount * price
+          return acc
+        },
+        { totalPrice: 0, totalItems: 0 }
+      )
+
+      return { ...state, totalItems, totalPrice }
     }
 
     default: {

@@ -4,9 +4,11 @@ import CartItems from '../components/CartItems'
 import { Button } from '../styles/Button'
 import { BsCart4 } from 'react-icons/bs'
 import { NavLink } from 'react-router-dom'
+import FormatPrice from '../helpers/FormatPrice'
 
 const Cart = () => {
-  const { cartItems, clearCart } = useCart()
+  const { cartItems, clearCart, totalPrice, shippingCharge } = useCart()
+
   return cartItems.length === 0 ? (
     <Wrapper>
       <div className="container empty-cart">
@@ -42,6 +44,30 @@ const Cart = () => {
           <Button className="btn-clear" onClick={clearCart}>
             Clear Cart
           </Button>
+        </div>
+
+        <div className="order-total--amount">
+          <div className="order-total--subdata">
+            <div>
+              <p>Subtotal:</p>
+              <p>
+                <FormatPrice price={totalPrice} />
+              </p>
+            </div>
+            <div>
+              <p>Shipping Charges:</p>
+              <p>
+                <FormatPrice price={shippingCharge} />
+              </p>
+            </div>
+            <hr />
+            <div>
+              <p>Order Total:</p>
+              <p>
+                <FormatPrice price={totalPrice + shippingCharge} />
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </Wrapper>

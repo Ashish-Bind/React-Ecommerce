@@ -10,7 +10,7 @@ const initialState = {
   cartItems: getSavedCartItem(),
   totalItems: '',
   totalPrice: '',
-  shippingCharge: '',
+  shippingCharge: 5000,
 }
 
 const CartContext = createContext()
@@ -44,6 +44,7 @@ function CartProvider({ children }) {
   }
 
   useEffect(() => {
+    dispatch({ type: CART_ACTIONS.UPDATE_TOTAL_VALUES })
     localStorage.setItem('cart-item', JSON.stringify(state.cartItems))
   }, [state.cartItems])
 

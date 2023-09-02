@@ -4,7 +4,7 @@ import CartAmountToggle from './CartAmountToggle'
 import { useCart } from '../context/cartContext'
 
 function CartItems({ item }) {
-  const { id, color, amount, name, img, price, max } = item
+  const { id, color, amount, name, img, price } = item
   const { removeItem, increaseAmount, decreaseAmount } = useCart()
 
   return (
@@ -29,7 +29,7 @@ function CartItems({ item }) {
 
       <div className="cart-hide">
         <p>
-          <FormatPrice price={price * 10} />
+          <FormatPrice price={price} />
         </p>
       </div>
 
@@ -43,7 +43,7 @@ function CartItems({ item }) {
 
       <div className="cart-hide">
         <p>
-          <FormatPrice price={price * amount * 10} />
+          <FormatPrice price={price * amount} />
         </p>
       </div>
 
