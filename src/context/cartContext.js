@@ -3,7 +3,9 @@ import cartReducer, { CART_ACTIONS } from '../reducer/cartReducer'
 
 const getSavedCartItem = () => {
   const data = localStorage.getItem('cart-item')
-  return data.length === 0 ? [] : JSON.parse(data)
+  const parseData = JSON.parse(data)
+  if (!Array.isArray(parseData)) return []
+  return parseData
 }
 
 const initialState = {
