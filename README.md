@@ -1,6 +1,6 @@
-# React Ecommerce
+# React E-commerce
 
-Ecommerce Website made using React. For State Management Context API is used with useReducer hook. Item data is gathered using API with the help of Axios.
+E-commerce Website made using React. For State Management Context API is used with useReducer hook. Item data is gathered using API with the help of Axios.
 
 ---
 
@@ -9,4 +9,4 @@ Ecommerce Website made using React. For State Management Context API is used wit
 
 ---
 
-Website Link : Coming Soon!
+[Website Link](https://react-ecommerce-1blu03umy-ashish-bind.vercel.app/)
